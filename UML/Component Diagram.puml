@@ -1,0 +1,18 @@
+@startuml
+title PlanPal - Component Diagram
+
+package "PlanPal iOS App" {
+  component "SwiftUI Views" as Views
+  component "ViewModels" as VM
+  component "Domain Models" as Models
+  component "EventService" as Service
+  component "Local Persistence\n(UserDefaults/JSON)" as Storage
+}
+
+Views --> VM : user actions / bindings
+VM --> Service : calls
+Service --> Models : create/update entities
+Service --> Storage : load/save
+VM --> Models : reads state
+
+@enduml

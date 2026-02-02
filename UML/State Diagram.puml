@@ -1,0 +1,14 @@
+@startuml
+title PlanPal - State Diagram (Invitation / RSVP)
+
+[*] --> Invited : createInvitation()
+
+Invited --> Going : rsvp(Going)
+Invited --> Declined : rsvp(Declined)
+
+Going --> Declined : changeRSVP()
+Declined --> Going : changeRSVP()
+Going --> [*] : eventArchived()
+Declined --> [*] : eventArchived()
+
+@enduml

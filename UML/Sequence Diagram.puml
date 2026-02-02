@@ -1,0 +1,21 @@
+@startuml
+title PlanPal - Sequence Diagram (RSVP Update)
+
+actor User
+participant "EventDetailView" as View
+participant "EventViewModel" as VM
+participant "EventService" as Service
+participant "LocalEventRepository" as Repo
+
+User -> View : Tap RSVP(Going)
+View -> VM : rsvp(choice=GOING)
+VM -> Service : updateRSVP(eventId, userId, GOING)
+Service -> Repo : loadEvent(eventId)
+Repo --> Service : event
+Service -> Repo : saveEvent(updatedEvent)
+Repo --> Service : ok
+Service --> VM : updatedEvent
+VM --> View : publish(updatedEvent)
+View --> User : UI shows RSVP=Going
+
+@enduml

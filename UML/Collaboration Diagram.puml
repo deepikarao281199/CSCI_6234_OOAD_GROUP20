@@ -1,0 +1,20 @@
+@startuml
+title PlanPal - Collaboration (Communication) Diagram (RSVP)
+
+object "EventDetailView\n<<boundary>>" as View
+object "EventController\n<<control>>" as Controller
+object "EventService\n<<control>>" as Service
+object "Event\n<<entity>>" as Event
+object "Invitation\n<<entity>>" as Invite
+object "EventRepository\n<<entity>>" as Repo
+
+View -> Controller : 1. rsvpTapped(eventId, userId, choice)
+Controller -> Service : 2. updateRSVP(eventId, userId, choice)
+Service -> Repo : 3. loadEvent(eventId)
+Repo --> Service : 4. event
+Service -> Invite : 5. setStatus(userId, choice)
+Service -> Repo : 6. saveEvent(event)
+Service --> Controller : 7. success(updatedEvent)
+Controller --> View : 8. render(updatedEvent)
+
+@enduml

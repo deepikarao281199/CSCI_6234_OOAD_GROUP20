@@ -1,0 +1,26 @@
+@startuml
+title PlanPal - Activity Diagram (RSVP Flow)
+
+start
+:User opens Event Details;
+:User taps "RSVP";
+
+if (User is invited?) then (yes)
+  :Show RSVP options;
+else (no)
+  :Show error "Not invited";
+  stop
+endif
+
+if (Choice = Going?) then (yes)
+  :Set RSVP = GOING;
+else (no)
+  :Set RSVP = DECLINED;
+endif
+
+:Save RSVP locally;
+:Update participant list on screen;
+:Notify organizer of RSVP change;
+stop
+@enduml
+

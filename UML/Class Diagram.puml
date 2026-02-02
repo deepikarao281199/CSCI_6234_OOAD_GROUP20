@@ -1,0 +1,56 @@
+@startuml
+title PlanPal - Class Diagram
+
+class User {
+  +id: String
+  +name: String
+}
+
+class Event {
+  +id: String
+  +title: String
+  +dateTime: String
+  +location: String
+  +description: String
+  +updateDetails()
+}
+
+class Invitation {
+  +id: String
+  +status: RSVPStatus
+  +setStatus(newStatus: RSVPStatus)
+}
+
+enum RSVPStatus {
+  INVITED
+  GOING
+  DECLINED
+}
+
+class EventService {
+  +createEvent(organizer: User): Event
+  +invite(eventId: String, user: User): Invitation
+  +updateRSVP(eventId: String, userId: String, choice: RSVPStatus): Event
+}
+
+interface EventRepository {
+  +loadEvent(eventId: String): Event
+  +saveEvent(event: Event)
+  +listEvents(userId: String)
+}
+
+class LocalEventRepository {
+  +loadEvent(eventId: String): Event
+  +saveEvent(event: Event)
+  +listEvents(userId: String)
+}
+
+User "1" -- "0..*" Event : organizes
+Event "1" o-- "0..*" Invitation : invitations
+Invitation "*" --> "1" User : participant
+Invitation --> RSVPStatus
+
+EventService ..> EventRepository : uses
+LocalEventRepository ..|> EventRepository : implements
+
+@enduml
