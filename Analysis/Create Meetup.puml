@@ -1,0 +1,41 @@
+@startuml
+title Robustness - Create Meetup
+
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+rectangle "Boundary Layer" {
+  object "CreateMeetupView\n<<boundary>>" as B
+}
+
+rectangle "Control Layer" {
+  object "MeetupController\n<<control>>" as C
+  object "MeetupService\n<<control>>" as S
+}
+
+rectangle "Entity Layer" {
+  object "Meetup\n<<entity>>" as M
+  object "Location\n<<entity>>" as L
+  object "User\n<<entity>>" as U
+}
+
+rectangle "External" {
+  object "MeetupRepository\n<<entity>>" as R
+}
+
+B -> C : 1 submitMeetupForm()
+C -> S : 2 createMeetup(hostId, details)
+S -> U : 3 validateHost(hostId)
+S -> L : 4 buildLocation()
+S -> M : 5 createMeetupEntity()
+S -> R : 6 saveMeetup(meetup)
+S -> C : 7 result(meetupCreated)
+C -> B : 8 showConfirmation()
+
+note bottom
+Host creates a new meetup. Service validates host, builds location, creates a Meetup entity,
+persists it, and returns confirmation to display.
+end note
+
+@enduml

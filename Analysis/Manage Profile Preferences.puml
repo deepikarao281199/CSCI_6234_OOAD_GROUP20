@@ -1,0 +1,41 @@
+@startuml
+title Robustness - Manage Profile & Preferences
+
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+rectangle "Boundary Layer" {
+  object "ProfileView\n<<boundary>>" as B
+}
+
+rectangle "Control Layer" {
+  object "ProfileController\n<<control>>" as C
+  object "ProfileService\n<<control>>" as S
+}
+
+rectangle "Entity Layer" {
+  object "User\n<<entity>>" as U
+  object "Preference\n<<entity>>" as P
+}
+
+rectangle "External" {
+  object "UserRepository\n<<entity>>" as R
+}
+
+B -> C : 1 saveProfileChanges()
+C -> S : 2 updateProfile(userId, changes)
+S -> R : 3 loadUser(userId)
+R -> S : 4 user
+S -> U : 5 applyChanges()
+S -> P : 6 updatePreferences()
+S -> R : 7 saveUser(user)
+S -> C : 8 result(updatedUser)
+C -> B : 9 showUpdatedProfile()
+
+note bottom
+User edits profile data and preferences. Controller calls service, which loads the user,
+updates profile fields and preferences, persists changes, and returns updated results to UI.
+end note
+
+@enduml

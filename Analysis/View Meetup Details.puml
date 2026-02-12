@@ -1,0 +1,42 @@
+@startuml
+title Robustness - View Meetup Details
+
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+rectangle "Boundary Layer" {
+  object "MeetupDetailView\n<<boundary>>" as B
+}
+
+rectangle "Control Layer" {
+  object "MeetupController\n<<control>>" as C
+  object "MeetupService\n<<control>>" as S
+}
+
+rectangle "Entity Layer" {
+  object "Meetup\n<<entity>>" as M
+  object "Participation\n<<entity>>" as P
+  object "Location\n<<entity>>" as L
+}
+
+rectangle "External" {
+  object "MeetupRepository\n<<entity>>" as R
+}
+
+B -> C : 1 openDetails(meetupId)
+C -> S : 2 getMeetupDetails(meetupId)
+S -> R : 3 loadMeetup(meetupId)
+R -> S : 4 meetup
+S -> M : 5 readCoreDetails()
+S -> P : 6 readParticipants()
+S -> L : 7 readLocation()
+S -> C : 8 detailsDTO
+C -> B : 9 showDetails()
+
+note bottom
+User selects a meetup. Controller asks service for full details. Service loads meetup,
+reads participants and location data, and returns a complete view model to display.
+end note
+
+@enduml

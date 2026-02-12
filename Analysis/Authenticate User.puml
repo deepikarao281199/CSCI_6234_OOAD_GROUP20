@@ -1,0 +1,45 @@
+@startuml
+title Robustness - Authenticate User (Login)
+
+top to bottom direction
+skinparam shadowing false
+skinparam linetype polyline
+skinparam nodesep 60
+skinparam ranksep 80
+
+rectangle "Boundary Layer" {
+  object "LoginView\n<<boundary>>" as B
+}
+
+rectangle "Control Layer" {
+  object "AuthController\n<<control>>" as C
+  object "AuthService\n<<control>>" as S
+}
+
+rectangle "Entity Layer" {
+  object "Credentials\n<<entity>>" as CR
+  object "User\n<<entity>>" as U
+}
+
+rectangle "External" {
+  object "UserRepository\n<<entity>>" as R
+}
+
+B --> C : 1 submitLogin(username,password)
+C --> S : 2 authenticate(credentials)
+
+S --> CR : 3 validateFormat()
+S --> R  : 4 findUser(username)
+R --> S  : 5 userRecord
+S --> U  : 6 verifyPassword()
+
+S --> C : 7 authResult(success/fail)
+C --> B : 8 showHomeOrError()
+
+note bottom
+User enters login details. Controller forwards to AuthService,
+which validates credentials, loads user record, verifies password,
+and returns success/failure to display.
+end note
+
+@enduml

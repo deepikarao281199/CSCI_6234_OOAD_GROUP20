@@ -1,0 +1,39 @@
+@startuml
+title Robustness - View Active / Upcoming Meetups
+
+left to right direction
+skinparam linetype ortho
+skinparam shadowing false
+
+rectangle "Boundary Layer" {
+  object "MeetupListView\n<<boundary>>" as B
+}
+
+rectangle "Control Layer" {
+  object "MeetupController\n<<control>>" as C
+  object "MeetupService\n<<control>>" as S
+}
+
+rectangle "Entity Layer" {
+  object "Meetup\n<<entity>>" as M
+  object "Location\n<<entity>>" as L
+}
+
+rectangle "External" {
+  object "MeetupRepository\n<<entity>>" as R
+}
+
+B -> C : 1 openMeetupList(filters)
+C -> S : 2 getActiveUpcoming(filters)
+S -> R : 3 listMeetups(filters)
+R -> S : 4 meetups
+S -> M : 5 sortFilterByTimeDistance()
+S -> C : 6 result(meetupList)
+C -> B : 7 displayMeetups()
+
+note bottom
+User browses meetups. Controller requests list from service, which fetches meetups,
+applies filtering/sorting (time, distance, activity), and returns a list to display.
+end note
+
+@enduml
