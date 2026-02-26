@@ -1,0 +1,30 @@
+@startuml
+title MicroMeet - Activity Diagram (View Active / Upcoming Meetups)
+
+start
+:1. Open Meetup List screen;
+:2. Select filters (activity/time/distance);
+:3. System fetches meetups list;
+:4. System filters and sorts results;
+:5. Display meetups list;
+
+if (User selects a meetup?) then (Yes)
+  :6. Navigate to Meetup Details;
+else (No)
+  :7. End browsing;
+endif
+
+stop
+
+legend bottom
+Steps mapping (numbers match actions):
+1 Open meetup list
+2 Select filters
+3 Fetch meetups list
+4 Filter/sort results
+5 Display list
+6 Navigate to details
+7 End browsing
+endlegend
+
+@enduml

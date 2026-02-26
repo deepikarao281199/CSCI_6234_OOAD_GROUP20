@@ -1,0 +1,44 @@
+@startuml
+title MicroMeet - Activity Diagram (Authenticate User - Login)
+
+start
+:1. Open Login screen;
+:2. Enter username and password;
+:3. Click "Login";
+:4. System validates input format;
+
+if (Input valid?) then (Yes)
+  :5. System finds user by username;
+  if (User exists?) then (Yes)
+    :6. System verifies password;
+    if (Password correct?) then (Yes)
+      :7. Create session/token;
+      :8. Show Home screen;
+    else (No)
+      :9. Show "Invalid credentials" error;
+    endif
+  else (No)
+    :10. Show "Invalid credentials" error;
+  endif
+else (No)
+  :11. Show validation errors;
+endif
+
+stop
+
+legend bottom
+Steps mapping (numbers match actions):
+1 Open login screen
+2 Enter credentials
+3 Submit login
+4 Validate input format
+5 Find user
+6 Verify password
+7 Create session/token
+8 Show home screen
+9 Invalid credentials error
+10 User not found error
+11 Validation errors
+endlegend
+
+@enduml

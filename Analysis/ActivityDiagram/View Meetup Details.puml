@@ -1,0 +1,30 @@
+@startuml
+title MicroMeet - Activity Diagram (View Meetup Details)
+
+start
+:1. User selects meetup from list;
+:2. System loads meetup details;
+:3. System loads participants list;
+:4. System loads location info;
+:5. Display meetup details screen;
+
+if (User requests to join?) then (Yes)
+  :6. Proceed to Join Request flow;
+else (No)
+  :7. Return or stay on details screen;
+endif
+
+stop
+
+legend bottom
+Steps mapping (numbers match actions):
+1 Select meetup
+2 Load meetup details
+3 Load participants
+4 Load location info
+5 Display details
+6 Proceed to join request
+7 Return/stay
+endlegend
+
+@enduml

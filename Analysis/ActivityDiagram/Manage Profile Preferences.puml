@@ -1,0 +1,40 @@
+@startuml
+title MicroMeet - Activity Diagram (Manage Profile & Preferences)
+
+start
+:1. Open Profile screen;
+:2. View current profile and preferences;
+:3. Edit profile fields and preferences;
+:4. Click "Save";
+:5. System validates profile inputs;
+
+if (Inputs valid?) then (Yes)
+  :6. System loads user record;
+  :7. System applies profile changes;
+  :8. System updates preferences;
+  :9. System saves updated user;
+  :10. Show "Profile updated" confirmation;
+else (No)
+  :11. Show validation errors;
+  :12. User revises inputs;
+endif
+
+stop
+
+legend bottom
+Steps mapping (numbers match actions):
+1 Open Profile screen
+2 View current profile/preferences
+3 Edit fields/preferences
+4 Click Save
+5 Validate inputs
+6 Load user record
+7 Apply profile changes
+8 Update preferences
+9 Save updated user
+10 Show confirmation
+11 Show validation errors
+12 Revise inputs
+endlegend
+
+@enduml

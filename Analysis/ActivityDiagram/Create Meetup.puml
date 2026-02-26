@@ -1,0 +1,36 @@
+@startuml
+title MicroMeet - Activity Diagram (Create Meetup)
+
+start
+:1. Host opens Create Meetup screen;
+:2. Host enters meetup details (title, time, capacity, description);
+:3. Host enters location details;
+:4. Host clicks "Create";
+:5. System validates inputs;
+
+if (Inputs valid?) then (Yes)
+  :6. System creates Meetup entity;
+  :7. System saves meetup;
+  :8. Show "Meetup created" confirmation;
+else (No)
+  :9. Show validation errors;
+  :10. Host updates inputs;
+endif
+
+stop
+
+legend bottom
+Steps mapping (numbers match actions):
+1 Open create meetup screen
+2 Enter meetup details
+3 Enter location details
+4 Click Create
+5 Validate inputs
+6 Create meetup entity
+7 Save meetup
+8 Show confirmation
+9 Show validation errors
+10 Update inputs
+endlegend
+
+@enduml
