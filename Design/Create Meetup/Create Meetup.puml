@@ -1,0 +1,30 @@
+@startuml
+title Sequence Diagram - Create Meetup
+skinparam shadowing false
+skinparam linetype ortho
+
+actor HostActor as "Host"
+boundary CreateMeetupView
+control MeetupController
+control MeetupService
+database MeetupRepository
+entity User
+entity Meetup
+entity Location
+
+HostActor -> CreateMeetupView : fillMeetupForm()
+CreateMeetupView -> MeetupController : submitMeetupForm(hostId, meetupData, locationData)
+
+MeetupController -> MeetupService : createMeetup(hostId, meetupData, locationData)
+
+MeetupService -> User : validateHost(hostId)
+MeetupService -> Location : buildFrom(locationData)
+MeetupService -> Meetup : createNew(hostId, meetupData, location)
+
+MeetupService -> MeetupRepository : saveMeetup(meetup)
+MeetupRepository --> MeetupService : savedMeetup(meetup)
+
+MeetupService --> MeetupController : meetupCreated(meetup)
+MeetupController --> CreateMeetupView : showConfirmation(meetup)
+
+@enduml
