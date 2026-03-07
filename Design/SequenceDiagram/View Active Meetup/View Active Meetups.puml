@@ -1,0 +1,25 @@
+@startuml
+title Sequence Diagram - View Active / Upcoming Meetups
+skinparam shadowing false
+skinparam linetype ortho
+
+actor UserActor as "User"
+boundary MeetupListView
+control MeetupController
+control MeetupService
+database MeetupRepository
+entity Meetup
+
+UserActor -> MeetupListView : openMeetupList(filters)
+MeetupListView -> MeetupController : requestMeetups(filters)
+
+MeetupController -> MeetupService : getActiveUpcoming(filters)
+MeetupService -> MeetupRepository : listActiveUpcoming(filters)
+MeetupRepository --> MeetupService : meetups(List<Meetup>)
+
+MeetupService -> MeetupService : sortAndFilter(meetups, filters)
+MeetupService --> MeetupController : meetupList(meetups)
+
+MeetupController --> MeetupListView : displayMeetups(meetups)
+
+@enduml
