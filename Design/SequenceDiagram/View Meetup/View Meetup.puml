@@ -1,0 +1,30 @@
+@startuml
+title Sequence Diagram - View Meetup Details
+skinparam shadowing false
+skinparam linetype ortho
+
+actor UserActor as "User"
+boundary MeetupDetailView
+control MeetupController
+control MeetupService
+database MeetupRepository
+entity Meetup
+entity Participation
+entity Location
+
+UserActor -> MeetupDetailView : selectMeetup(meetupId)
+MeetupDetailView -> MeetupController : openDetails(meetupId)
+
+MeetupController -> MeetupService : getMeetupDetails(meetupId)
+
+MeetupService -> MeetupRepository : loadMeetup(meetupId)
+MeetupRepository --> MeetupService : meetup(Meetup)
+
+MeetupService -> Meetup : readCoreDetails()
+MeetupService -> Participation : listParticipants(meetupId)
+MeetupService -> Location : readLocation(meetupId)
+
+MeetupService --> MeetupController : detailsDTO(details)
+MeetupController --> MeetupDetailView : showDetails(details)
+
+@enduml
