@@ -1,0 +1,26 @@
+:root {
+  --bg: #fff7f8;
+  --bg-soft: #fff1f3;
+  --text: #0f172a;
+  --text-soft: #475569;
+  --card: #ffffff;
+  --card-elevated: #fcfdff;
+  --muted: #64748b;
+  --border: #f3d3d8;
+  /* Wine red brand */
+  --brand: #7f1d1d;
+  --brand-2: #9f1239;
+  --brand-3: #be123c;
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #dc2626;
+}
+
+body {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(190, 18, 60, 0.16), transparent 40%),
+    radial-gradient(circle at 100% 0%, rgba(127, 29, 29, 0.14), transparent 38%),
+    radial-gradient(circle at 70% 80%, rgba(159, 18, 57, 0.12), transparent 40%),
+    var(--bg);
+  color: var(--text);
+}
